@@ -4,6 +4,10 @@
   "description": "forwards emails sent to your aws managed another address",
   "main": "index.js",
   "scripts": {
+    "build": "npm run archive",
+    "archive": "npm run assemble && mkdir -p ./build/lib && cd ./build/js && zip -r ../lib/email-forwarder.zip *",
+    "assemble": "npm run clean && npx tsc",
+    "clean": "rm -rf ./build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
