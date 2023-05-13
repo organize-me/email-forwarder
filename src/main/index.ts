@@ -1,34 +1,24 @@
 import { SQSBatchResponse, SQSEvent, SQSHandler, SQSRecord, SQSBatchItemFailure } from "aws-lambda";
 
 export const handler: SQSHandler = async (event: SQSEvent): Promise<SQSBatchResponse> => {
-    
-    // kickoff record processing
-    let promises: {record: SQSRecord, promise: Promise<void>}[] = []
-    for(const record of event.Records) {
-        promises.push({
-            record: record,
-            promise: handleRecord(record)
-        })
-    }
 
-    // wait for record processing
-    let batchItemFailures: SQSBatchItemFailure[] = []
-    for(const p of promises) {
+    const batchItemFailures: SQSBatchItemFailure[] = []
+
+    return Promise.all(event.Records.map(r => {
         try {
-            await p.promise
-        } catch(e) {
+            return handleRecord(r);
+        } catch (e) { 
             batchItemFailures.push({
-                itemIdentifier: p.record.messageId
+                itemIdentifier: r.messageId
             })
         }
-    }
-
-    // return failed records
-    return {
-        batchItemFailures: batchItemFailures
-    }
+    })).then(() => {
+        return {
+            batchItemFailures: batchItemFailures
+        }
+    })
 }
 
 const handleRecord = async(record: SQSRecord): Promise<void> => {
-
+    console.info(JSON.stringify(record))
 }
