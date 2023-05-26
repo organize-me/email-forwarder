@@ -1,0 +1,20 @@
+{
+    "smtp": {
+        "host": "localhost",
+        "port": 1025,
+        "secure": false,
+        "auth": {
+            "user": "test",
+            "pass": "test"
+        },
+        "tls": {
+            "rejectUnauthorized": false
+        }
+    },
+    "mappings": {
+        "isaiah@domain.com": {
+            "to": "Target Address <isaiah.v@target.net>",
+            "from": "Forward-Bot <noreply@domain.com>"
+        }
+    }
+}

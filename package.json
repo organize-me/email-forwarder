@@ -8,7 +8,8 @@
     "archive": "npm run assemble && mkdir -p ./build/lib && cd ./build/js/main && zip -r ../../lib/email-forwarder.zip *",
     "assemble": "npm run clean && npx tsc",
     "clean": "rm -rf ./build",
-    "test": "mocha -r ts-node/register src/test/**/*.spec.ts"
+    "test": "NODE_ENV=test mocha -r ts-node/register src/test/*.spec.ts src/test/**/*.spec.ts",
+    "test-email": "NODE_ENV=test mocha -r ts-node/register src/test/index.spec.ts"
   },
   "repository": {
     "type": "git",
@@ -24,8 +25,10 @@
   "devDependencies": {
     "@types/aws-lambda": "^8.10.115",
     "@types/chai": "^4.3.5",
+    "@types/config": "^3.3.0",
     "@types/lambda-tester": "^3.6.2",
     "@types/mocha": "^10.0.1",
+    "@types/nodemailer": "^6.4.7",
     "aws-sdk": "^2.1376.0",
     "chai": "^4.3.7",
     "mocha": "^10.2.0",
@@ -34,6 +37,8 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "lambda-tester": "^4.0.1"
+    "config": "^3.3.9",
+    "lambda-tester": "^4.0.1",
+    "nodemailer": "^6.9.2"
   }
 }

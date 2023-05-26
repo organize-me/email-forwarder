@@ -1,5 +1,11 @@
+# Build Artifacts
 build/**
 node_modules
+
+# Intellij IDE
+.idea/**
+
+# Terraform Init & State
+terraform/.terraform/**
 *.tfstate
 *.tfstate.backup
-terraform/.terraform/**

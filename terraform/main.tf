@@ -31,6 +31,32 @@ resource "aws_sqs_queue" "email_forwarder_queue" {
   })
 }
 
+data "aws_iam_policy_document" "email_forwarder_queue_policy_doc" {
+  statement {
+    sid     = "1"
+    effect  = "Allow"
+
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+
+    actions   = ["sqs:SendMessage"]
+    resources = [aws_sqs_queue.email_forwarder_queue.arn]
+
+    condition {
+      test      = "ArnEquals"
+      variable  = "aws:SourceArn"
+      values    = [aws_sns_topic.email_forwarder.arn]
+    }
+  }
+}
+
+resource "aws_sqs_queue_policy" "email_forwarder_queue_policy" {
+  queue_url = aws_sqs_queue.email_forwarder_queue.id
+  policy    = data.aws_iam_policy_document.email_forwarder_queue_policy_doc.json
+}
+
 // --== Subscription ==-- //
 resource "aws_sns_topic_subscription" "email_forwarder_topic_subscription" {
   topic_arn             = aws_sns_topic.email_forwarder.arn
