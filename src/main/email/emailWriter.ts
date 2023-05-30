@@ -12,15 +12,8 @@ export const writeEmail = (email: {headers: EmailHeaders, body: Readable}, out: 
     }
     out.write(newline)
 
-    // when we're done reading the email body, close the out stream
-    // If an error is found, forward that error to the out stream
-    once(email.body, "close").catch((e:Error) => {
-        out.emit("error", e)
-    }).finally(() => {
-        out.end()
-        out.destroy()
-    })
-
     // pipe the email body to the out stream
-    email.body.pipe(out)
+    email.body.pipe(out, {
+        end: true
+    })
 }

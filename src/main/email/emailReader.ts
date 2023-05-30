@@ -25,7 +25,7 @@ export class EmailReader {
         rl.on("error", (error: Error) => {
             stateNode.error(error)
         })
-        rl.on("close", () => {
+        rl.on("close", () => { 
             stateNode.eof()
         })
     })
@@ -129,7 +129,6 @@ class StreamStateNode implements StateNode {
 
     public eof() {
         this.stream.end()
-        this.stream.destroy()
     }
     
     public error(error: Error) {

@@ -58,7 +58,7 @@ function findMapping(whoFor: string): {to: string, from: string} {
     let mapping: any = mappings[Object.keys(mappings).find(k => k.trim().toLowerCase() === whoFor)]
 
     if(!mapping) {
-        throw new Error("forward mapping could not be found")
+        throw new Error(`forward mapping could not be found for address: ${whoFor}`)
     }
 
     return mapping as {to: string, from: string}

@@ -9,3 +9,7 @@ node_modules
 terraform/.terraform/**
 *.tfstate
 *.tfstate.backup
+
+# Ignore non-testing configs
+config/**
+!config/test.json

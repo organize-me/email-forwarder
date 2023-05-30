@@ -1,0 +1,74 @@
+Return-Path: <isaiah.v@from-domain.com>
+Received: from resqmta-h1p-028591.sys.comcast.net (resqmta-h1p-028591.sys.comcast.net [96.102.200.9])
+ by inbound-smtp.us-west-2.amazonaws.com with SMTP id 7b9fjh2907904ho79b8adjltde53tb19jflnghg1
+ for isaiah.v@to-domain.com;
+ Mon, 15 May 2023 02:47:52 +0000 (UTC)
+X-SES-Spam-Verdict: PASS
+X-SES-Virus-Verdict: PASS
+Received-SPF: pass (spfCheck: domain of comcast.net designates 96.102.200.9 as permitted sender) client-ip=96.102.200.9; envelope-from=isaiah.v@from-domain.com; helo=resqmta-h1p-028591.sys.comcast.net;
+Authentication-Results: amazonses.com;
+ spf=pass (spfCheck: domain of comcast.net designates 96.102.200.9 as permitted sender) client-ip=96.102.200.9; envelope-from=isaiah.v@from-domain.com; helo=resqmta-h1p-028591.sys.comcast.net;
+ dkim=pass header.i=@comcast.net;
+ dmarc=pass header.from=comcast.net;
+X-SES-RECEIPT: AEFBQUFBQUFBQUFIU1ZDQ1Z1ODRpRDBiMUR3M2xxQ0l6T1Qyc2ZPMGZGVW1mWFBxLy9hY0F6YXI1ZGlTa3o1OVpmMm8xZGNxaGlsbEFESzhWcTUya3ZLS1NEK0hiVnoydzNBR0Nza0pBcFc4WjV5OUN6am81KzhNd3V5OVhxQTRKT0o2MGtYV0ZFeWh3MnNtNFBURU50amhHa1l3SFJoVGxmdEhxeUphN2pWMktXTlEwa2hnd0V3R3FaUjZqdDM3djAwOU92Vm9PMTdBNnRBdjNvbjdPNi9jQ0J4U1N5Z2ZoV0lUWVZjZVRBd3ZYd3pCYk50MXkwNk1ZOVFhckNITzZ4MVBoN3Q0K0d6NFNPR3pVQ2V6ZDFCbnFmL0NCb0R4eFZCUW11eU9ndmM5ZzVhRWZkS2tJVUE9PQ==
+X-SES-DKIM-SIGNATURE: a=rsa-sha256; q=dns/txt; b=Yvfztsfqsm6JV6Q+oOp28/9FCaLp0+t5tFHKg96+Wvef9iQTwSm6fTLUmDZWGl0Fei33VJLX7+b9yy2peU5YBeTi6IpzF26bTjAcDcFcG9nbcSEd9dIbr97JWhbaAGvfcZzZDwoWJCh3xVjeQox280WpWO83P2EwNqubQDUh5S0=; c=relaxed/simple; s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1684118873; v=1; bh=gFOvanWyB+64JS2HPZwIqdJV5GdAAXFypd7X0ztG8oY=; h=From:To:Cc:Bcc:Subject:Date:Message-ID:MIME-Version:Content-Type:X-SES-RECEIPT;
+Received: from resomta-h1p-027915.sys.comcast.net ([96.102.179.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 256/256 bits)
+	(Client did not present a certificate)
+	by resqmta-h1p-028591.sys.comcast.net with ESMTP
+	id yOEXpjIcoHVieyOFbplQYG; Mon, 15 May 2023 02:47:51 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=20190202a; t=1684118871;
+	bh=01FBz7g0BG7tqiHJV0uFBRgFvmaQu4sZjD4FcMlMmTY=;
+	h=Received:Received:Date:From:To:Message-ID:Subject:MIME-Version:
+	 Content-Type:Xfinity-Spam-Result;
+	b=gMw+YxMEvm9qVX48LksaM9IhDlrqS6vo7v5bSJgSJnc6m9s9xpc0OKjACAs69XMc4
+	 UtFVVVqJbzQNi/SgLHOP2UWhmMSbmxn9zeYW7l7sApd5+dVHLjQhXf/pEOKN0xr+vJ
+	 frzN1T9srlv9aB99cTDnXY3DlyOg0qs+RmQK1DWWohaiI1QsMfgWr8o2lOa2YEZyuJ
+	 N7PnrbAYDkD08UMMQlDKG4+us0agCPDiZ0GNzwDJ2LobroZIKzW+tPaWvF6aum42g2
+	 FfrbYJHm2G7AQY/lDnawNOdfrlNdkjjYcozCgi/ykrGyTTDCrrYLrF8QU3hiNXY/Cs
+	 JoiI4TCJMl3yA==
+Received: from oxapp-hob-32o.email.comcast.net ([96.118.25.247])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 256/256 bits)
+	(Client did not present a certificate)
+	by resomta-h1p-027915.sys.comcast.net with ESMTPS
+	id yOFapZpIypHyQyOFapG6vT; Mon, 15 May 2023 02:47:50 +0000
+X-Xfinity-VAAS: gggruggvucftvghtrhhoucdtuddrgedvhedrfeehiedgiedvucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuvehomhgtrghsthdqtfgvshhipdfqfgfvpdfpqffurfetoffkrfenuceurghilhhouhhtmecufedtudenucenucfjughrpeffhffvkffugggtrfgkofhisegrtdgssgertdejnecuhfhrohhmpefkshgrihgrhhcuvhgrnhcuuggvrhcuvghlshhtuceoihhsrghirghhrdhvsegtohhmtggrshhtrdhnvghtqeenucggtffrrghtthgvrhhnpeefveejvefggeevffdugeduveegjedtffeuudffhfeifeevteekhfevuedugeeiteenucfkphepleeirdduudekrddvhedrvdegjedpjeefrdduieegrdduhedurddugeejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehhvghlohepohigrghpphdqhhhosgdqfedvohdrvghmrghilhdrtghomhgtrghsthdrnhgvthdpihhnvghtpeeliedruddukedrvdehrddvgeejpdhmrghilhhfrhhomhepihhsrghirghhrdhvsegtohhmtggrshhtrdhnvghtpdhnsggprhgtphhtthhopedupdhrtghpthhtohepihhsrghirghhsehvrghnuggvrhgvlhhsthdrhhhouhhsvg
+X-Xfinity-VMeta: sc=0.00;st=legit
+Date: Sun, 14 May 2023 19:47:50 -0700 (PDT)
+From: Isaiah van der elst <isaiah.v@from-domain.com>
+To: "isaiah.v@to-domain.com" <isaiah.v@to-domain.com>
+Message-ID: <140475149.133511.1684118870359@connect.xfinity.com>
+Subject: test
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_133510_1144981925.1684118870354"
+X-Priority: 3
+Importance: Normal
+X-Mailer: Open-Xchange Mailer v7.10.6-Rev39
+X-Originating-IP: ::ffff:73.164.151.147
+X-Originating-Client: open-xchange-appsuite
+
+------=_Part_133510_1144981925.1684118870354
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+test it
+------=_Part_133510_1144981925.1684118870354
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!doctype html>
+<html>
+ <head> 
+  <meta charset="UTF-8"> 
+ </head>
+ <body>
+  <div class="default-style" style="font-size: 12pt; font-family: helvetica,arial,sans-serif; color: #333333;">
+   <span style="font-family: helvetica; font-size: 12pt;">test it</span>
+  </div>
+ </body>
+</html>
+------=_Part_133510_1144981925.1684118870354--

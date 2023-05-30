@@ -12,9 +12,9 @@
         }
     },
     "mappings": {
-        "isaiah@domain.com": {
-            "to": "Target Address <isaiah.v@target.net>",
-            "from": "Forward-Bot <noreply@domain.com>"
+        "isaiah.v@to-domain.com": {
+            "to": "Isaiah <isaiah.v@mapped-domain.com>",
+            "from": "Forward-Bot <noreply@to-domain.com>"
         }
     }
 }
