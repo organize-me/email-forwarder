@@ -4,15 +4,11 @@
   "description": "forwards emails sent to your aws managed another address",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build:archive",
-    "build:archive": "npm run build:build && cd ./build/install && zip -r email-forwarder.zip .* && cd ../.. && mv ./build/install/email-forwarder.zip ./build/email-forwarder.zip",
-    "build:build": "npm run clean && npm run build:config && npm run build:compile && npm run build:install",
-    "build:config": "mkdir -p ./build/install/config && if [ -n \"$npm_config_config\" ]; then cp $npm_config_config/* ./build/install/config/; else cp ./config/* ./build/install/config/; fi",
-    "build:install": "mkdir -p ./build/install && cp ./package.json ./build/install/package.json && npm --omit=dev --prefix ./build/install install",
-    "build:compile": "npm run assemble && mkdir -p ./build/install && cp -a ./build/js/main/* ./build/install",
-    "assemble": "npx tsc",
+    "deploy": "./scripts/deploy.sh",
+    "build": "./scripts/build.sh",
     "clean": "rm -rf ./build",
-    "test": "NODE_ENV=test mocha -r ts-node/register src/test/*.spec.ts src/test/**/*.spec.ts"
+    "test": "NODE_ENV=production mocha -r ts-node/register --max-old-space-size=256 src/test/*.spec.ts src/test/**/*.spec.ts",
+    "test:run": "NODE_ENV=test mocha -r ts-node/register"
   },
   "repository": {
     "type": "git",
@@ -27,12 +23,16 @@
   "homepage": "https://github.com/organize-me/email-forwarder#readme",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.115",
+    "@types/base64-stream": "^1.0.2",
     "@types/chai": "^4.3.5",
     "@types/config": "^3.3.0",
     "@types/lambda-tester": "^3.6.2",
+    "@types/mailparser": "3.4.0",
     "@types/mocha": "^10.0.1",
     "@types/node": "^20.2.5",
     "@types/nodemailer": "^6.4.7",
+    "@types/quoted-printable": "^1.0.0",
+    "@types/utf8": "^3.0.1",
     "aws-sdk-client-mock": "^2.1.1",
     "chai": "^4.3.7",
     "mocha": "^10.2.0",
@@ -41,9 +41,13 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.341.0",
+    "base64-stream": "^1.0.0",
     "config": "^3.3.9",
     "lambda-tester": "^4.0.1",
     "latest-version": "^7.0.0",
-    "nodemailer": "^6.9.2"
+    "mailparser": "^3.6.4",
+    "node-html-parser": "^6.1.5",
+    "nodemailer": "^6.9.2",
+    "quoted-printable": "^1.0.1"
   }
 }

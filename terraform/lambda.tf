@@ -16,7 +16,8 @@ resource "aws_lambda_function" "email_forwarder_function" {
 
   source_code_hash = data.local_file.lambda_archive.content_base64sha256
 
-  runtime = "nodejs16.x"
+  runtime = "nodejs18.x"
+  memory_size = 256
 
   environment {
     variables = {

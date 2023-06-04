@@ -12,6 +12,7 @@ import { DeleteObjectCommand, GetObjectCommand, GetObjectCommandInput, S3Client 
 const s3Mock = mockClient(S3Client)
 const s3MockRoot = "./src/test/data/mockS3/"
 
+
 beforeEach(() => {
   s3Mock.reset()
   s3Mock.on(GetObjectCommand).callsFake((input: GetObjectCommandInput) => {
@@ -24,9 +25,11 @@ beforeEach(() => {
   s3Mock.on(DeleteObjectCommand).resolves({})
 })
 
+
 describe('Lambda Happy Path', () => {
   [
-    "happy-path.json"
+    "happy-path.json",
+    "attachment-test.json"
   ].forEach(eventFile => {
     it(`invocation: ${eventFile}`, function() {
       this.timeout(0)
