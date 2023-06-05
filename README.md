@@ -16,11 +16,11 @@ For an individual or family, assuming you're already paying for a domain name, t
 | SES     | Recives emails                  | $0.12 | [link](https://aws.amazon.com/ses/pricing/)    | * 1000 Inbound Emails: $0.00<br /> * 1000 Outbound Emails: $0.00<br /> * 1 GB of Attachments: $0.12
 | S3      | Persists emails                 | $0.02 | [link](https://aws.amazon.com/s3/pricing/)     | * 1 GB of storage: $0.02 
 | SNS     | Notified when email's recived   | $0.00 | [link](https://aws.amazon.com/sns/pricing/)    | * SNS subscription: $0.00
-| SQS     | SNS Subscribed, triggers lambda | $0.00 | [link](https://aws.amazon.com/sqs/pricing/)    | * 1000 messages: $0.00
+| SQS     | SNS Subscribed, triggers lambda | $0.00 | [link](https://aws.amazon.com/sqs/pricing/)    | * 1000 messages: $0.00<br /> * < 1000 dlq messages: $0.00
 | Lambda  | Forwards recived emails         | $0.00 | [link](https://aws.amazon.com/lambda/pricing/) | * 1000 invokations @ 512MB: $0.00
 
 *Aproximate Total:* $0.14 / month
 
-<sub>*Note that this cost estimation does not include the price of your domain name, which is by far the most expensive paRert of this.</sub>
+<sub>*Note that this cost estimation does not include the price of your domain name, which is by far the most expensive part of this.</sub>
 
 # Deploy
