@@ -11,10 +11,9 @@
             "rejectUnauthorized": false
         }
     },
-    "mappings": {
-        "isaiah.v@to-domain.com": {
-            "to": "Isaiah <isaiah.v@mapped-domain.com>",
-            "from": "Forward-Bot <noreply@to-domain.com>"
-        }
+    "name-prefix": "\uD83D\uDCE8",
+    "from": "noreply@to-domain.com",
+    "forward": {
+        "isaiah.v@to-domain.com": "Isaiah <isaiah.v@mapped-domain.com>"
     }
 }

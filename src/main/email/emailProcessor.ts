@@ -19,8 +19,9 @@ export class EmailProcessor {
     private readonly fwdContentSubtype: string
     private readonly fwdBoundry: string
 
-    private readonly origFrom: string
-    private readonly origTo: string
+    private readonly origFrom: string | undefined
+    private readonly origTo: string | undefined
+    private readonly origCc: string | undefined
 
     constructor(fwdHeaders: {name: string, value: string}[], origHeaders: {name: string, value: string}[]) {
         this.fwdHeaders = fwdHeaders;
@@ -33,8 +34,9 @@ export class EmailProcessor {
         this.fwdFrom = this.getHeader(fwdHeaders, "From").value
         this.fwdTo = this.getHeader(fwdHeaders, "To").value
 
-        this.origFrom = this.getHeader(origHeaders, "From").value
-        this.origTo = this.getHeader(origHeaders, "To").value
+        this.origFrom = this.getHeader(origHeaders, "From")?.value
+        this.origTo = this.getHeader(origHeaders, "To")?.value
+        this.origCc = this.getHeader(origHeaders, "Cc")?.value
     }
 
     public async processEmail(inEmail: Readable) {
@@ -207,10 +209,8 @@ export class EmailProcessor {
             .pipe(out, {end: false})
 
         base64.on("end", ()=> {
-            console.log("writing attachment complete")
-            
             out.write(newline, (err) => {
-                console.log("???")
+                console.log("writing attachment")
                 attachment.release()
             })
         })
@@ -231,10 +231,24 @@ export class EmailProcessor {
 
     private createOrignalHeadersHtml(): string {
         return `
-            <div>
-                <p><span style="font-size: small; color: #808080;">From: ${escapeHtml(this.origFrom)}</span></p>
-                <p><span style="font-size: small; color: #808080;">To: ${escapeHtml(this.origTo)}</span></p>
+            <div style="padding-bottom: 10px">
+                <table>
+                    <tbody>
+                        ${this.origFrom ? this.createHeaderRow("From: ", escapeHtml(this.origFrom)) : ""}
+                        ${this.origTo ? this.createHeaderRow("To: ", escapeHtml(this.origTo)) : ""}
+                        ${this.origCc ? this.createHeaderRow("Cc: ", escapeHtml(this.origCc)) : ""}
+                    </tbody>
+                </table>
             </div>`
+    }
+
+    private createHeaderRow(name: string, value: string): string {
+        return `
+            <tr>
+                <td><em><span style="color: #808080; font-size: 12px; padding-right: 10px">${name}</span></em></td>
+                <td><em><span style="color: #808080; font-size: 12px">${value}</span></em></td>
+            </tr>
+        `
     }
 
     /**

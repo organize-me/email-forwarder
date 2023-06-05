@@ -7,7 +7,7 @@
     "deploy": "./scripts/deploy.sh",
     "build": "./scripts/build.sh",
     "clean": "rm -rf ./build",
-    "test": "NODE_ENV=production mocha -r ts-node/register --max-old-space-size=256 src/test/*.spec.ts src/test/**/*.spec.ts",
+    "test": "NODE_ENV=test mocha -r ts-node/register --max-old-space-size=256 src/test/*.spec.ts src/test/**/*.spec.ts",
     "test:run": "NODE_ENV=test mocha -r ts-node/register"
   },
   "repository": {

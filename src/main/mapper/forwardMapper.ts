@@ -1,10 +1,12 @@
 import config = require('config');
-import { EmailEvent } from "./models";
+import { EmailEvent, Address } from "./models";
 
 export const toForwardHeaders = (event: EmailEvent): {name: string, value: string}[] => {
     const values: {name: string, value: string}[] = []
-    const mapping = findMapping(event.mail.destination)
+    const to = findMappings(event.mail.destination)
+    const from = createFrom(event)
     const headers = createHeaderMap(event)
+    
 
     // Date
     values.push({
@@ -15,13 +17,13 @@ export const toForwardHeaders = (event: EmailEvent): {name: string, value: strin
     // From
     values.push({
         name: "From",
-        value: mapping.from
+        value: from
     })
 
     // To
     values.push({
         name: "To",
-        value: mapping.to
+        value: to
     })
 
     // Subject
@@ -60,20 +62,40 @@ export const toForwardHeaders = (event: EmailEvent): {name: string, value: strin
     return values
 }
 
-function findMapping(destination: string[]): {to: string, from: string} {
-    if(destination.length!=1) {
-        throw new Error("unexpected number of destination addresses")
-    }
-    let whoFor = destination[0].toLowerCase()
+function createFrom(event: EmailEvent): string {
+    const namePrefix = config.has("name-prefix") ? config.get("name-prefix") : ""
+    const newFromAddress = config.get("from")
+    const origFrom = event.mail.commonHeaders.from.map(Address.parse)
 
-    const mappings = config.get("mappings")
-    let mapping: any = mappings[Object.keys(mappings).find(k => k.trim().toLowerCase() === whoFor)]
+    if(origFrom.length<1) {
+        throw new Error("from address not defined")
+    }
+
+    // We can only support one From. We'll take the name from the first From
+    const name = origFrom[0].name ?? origFrom[0].address
+    return `${namePrefix} ${name} <${newFromAddress}>`
+}
+
+
+function findMappings(destination: string[]): string {
+    const forwards = config.get("forward")
+    const forwardsMap = new Map<string, string>()
+    for(const key of Object.keys(forwards)) {
+        forwardsMap.set(key.toLowerCase(), forwards[key])
+    }
+
+    return destination.map(d=>findMapping(d, forwardsMap)).toString()
+}
+
+function findMapping(destination: string, forwards: Map<string, string>): string {
+    let whoFor = destination.toLowerCase()
+    let mapping = forwards.get(whoFor)
 
     if(!mapping) {
         throw new Error(`forward mapping could not be found for address: ${whoFor}`)
     }
 
-    return mapping as {to: string, from: string}
+    return mapping
 }
 
 function createHeaderMap(event: EmailEvent):Map<string, {name: string, value: string}> {
