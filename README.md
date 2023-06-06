@@ -1,6 +1,11 @@
 # Email-Forwarder
 An AWS lambda to forward emails. This allows you to receive emails sent to your AWS managed domain, forwading them to the address of your choosing.
 
+### Features
+ * *Multiple Mappings:* The forward address is mapped based on the orginal email's destination. `sara@ourhouse.com`, for example, can get emails forwaded to a different location than `dave@ourhouse.com`.
+ * *Injected Orginal Message Headers:* The orginal's message info is added to the email body so that you can see who the email was sent to and where it orginally came from.
+ * *Supports Large Attachments:* There are no email size limits on attachments. And because data is streamed through, the lambda maintains a small footprint.
+
 # Prerequisites
  * An AWS account with a domain already set up through Route53
  * [AWS SES setup](https://docs.aws.amazon.com/ses/latest/dg/setting-up.html)
