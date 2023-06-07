@@ -1,9 +1,8 @@
 import { SQSBatchResponse, SQSEvent, SQSHandler, SQSRecord, SQSBatchItemFailure } from "aws-lambda";
 import { DeleteObjectCommand, GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { Readable } from "stream";
-import { toForwardHeaders } from "./mapper/forwardMapper";
-import { EmailProcessor } from "./email/emailProcessor";
-import { EmailEvent } from "./mapper/models";
+import { ForwardMapper } from "./email/ForwardMapper";
+import { EmailProcessor } from "./email/EmailProcessor";
 
 
 export const handler: SQSHandler = async (event: SQSEvent): Promise<SQSBatchResponse> => {
@@ -37,7 +36,7 @@ const processRecord = async(record: SQSRecord): Promise<void> => {
 
     console.info(`${record.messageId}: parsing record body`)
     const event = JSON.parse(record.body) as EmailEvent
-    const fwdHeaders = toForwardHeaders(event)
+    const fwdHeaders = ForwardMapper.toForwardHeaders(event)
 
     let bucket: string = event.receipt.action.bucketName
     let key = event.receipt.action.objectKey
@@ -54,4 +53,46 @@ const processRecord = async(record: SQSRecord): Promise<void> => {
 
     console.info(`${record.messageId}: sending email`)
     await new EmailProcessor(fwdHeaders, event.mail.headers).processEmail(bodyStream)
+
+    await s3Client.send(new DeleteObjectCommand({
+        Bucket: bucket,
+        Key: key
+    }))
+}
+
+
+export interface EmailEvent {
+    notificationType: string
+    mail: {
+        timestamp: string,
+        source: string,
+        messageId: string,
+        destination: string[]
+        headersTruncated: boolean
+        headers: {name: string, value: string}[]
+        commonHeaders: {
+            returnPath: string
+            from: string[]
+            date: string
+            to: string[]
+            messageId: string
+            subject: string
+        }
+    }
+    receipt: {
+        timestamp: string
+        processingTimeMillis: number
+        recipients: string[]
+        spamVerdict: {status: string}
+        virusVerdict: {status: string}
+        spfVerdict: {status: string}
+        dkimVerdict: {status: string}
+        dmarcVerdict: {status: string}
+        action: {
+            type: string
+            topicArn: string
+            bucketName: string
+            objectKey: string
+        }
+    }
 }

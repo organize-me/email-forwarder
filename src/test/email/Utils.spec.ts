@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
 import 'mocha';
-import { fold } from '../../main/utils/emailUtils';
+import { Utils } from '../../main/email/Utils';
 
 
 describe('email util tests', () => {
@@ -9,7 +9,7 @@ describe('email util tests', () => {
     let data = "Content-Type: multipart/alternative; boundary=\"----=_Part_133510_1144981925.1684118870354\""
     let expected = "Content-Type: multipart/alternative;\r\n\tboundary=\"----=_Part_133510_1144981925.1684118870354\""
 
-    let actual = fold(data)
+    let actual = Utils.fold(data)
     expect(actual).to.eq(expected)
   });
 

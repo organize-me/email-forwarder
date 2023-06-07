@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
 import 'mocha';
-import { Address } from '../../main/mapper/models';
+import { Address } from '../../main/email/ForwardMapper';
 
 
 describe('email util tests', () => {
