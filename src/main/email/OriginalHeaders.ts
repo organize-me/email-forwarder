@@ -42,8 +42,8 @@ export namespace OriginalHeaders {
       <tbody>
         ${ from ? `
         <tr>
-            <td><em><span style="color: #808080; font-size: 12px; padding-right: 10px">From: </span></em></td>
-            <td><em><span style="color: #808080; font-size: 12px">${Utils.escapeHtml(from)}</span></em></td>
+            <td><em><span style="color: #808080 !important; font-size: 12px; padding-right: 10px">From: </span></em></td>
+            <td><em><span style="color: #808080 !important; font-size: 12px">${Utils.escapeHtml(from)}</span></em></td>
         </tr>
         `:''}
 
