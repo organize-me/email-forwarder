@@ -12,7 +12,7 @@ resource "aws_ses_active_receipt_rule_set" "email-forwarder-rule-set-active" {
 resource "aws_ses_receipt_rule" "email-forwarder-rule" {
   name          = local.function_name
   rule_set_name = aws_ses_receipt_rule_set.email-forwarder-rule-set.rule_set_name
-  recipients    = keys(local.config.forward)
+  recipients    = local.emails
   enabled       = true
   scan_enabled  = true
 
