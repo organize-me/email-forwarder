@@ -1,31 +1,12 @@
 # Email-Forwarder
-An AWS lambda to forward emails. This allows you to receive emails sent to your AWS managed domain, forwading them to the address of your choosing.
+Do you have a domain you're managing through AWS? Would you like to use that domain for emails, but you're too cheap to pay the $4.00 a month per user for WorkMail? Then I may have the product for you.
+This project aims to forward emails sent to your domain to an address of your choosing.
 
 ### Features
- * *Multiple Mappings:* The forward address is mapped based on the orginal email's destination. `sara@ourhouse.com`, for example, can get emails forwaded to a different location than `dave@ourhouse.com`.
- * *Added Original Message Headers:* The orginal's message info is added to the email body so that you can see who the email was sent to and where it orginally came from.
- * *Supports Large Attachments:* There are no email size limits on attachments. And because data is streamed through, the lambda maintains a small footprint.
-
-# Prerequisites
- * An AWS account with a domain already set up through Route53
- * [AWS SES setup](https://docs.aws.amazon.com/ses/latest/dg/setting-up.html)
+ * *Multiple Mappings:* Maybe you'd like to forward emails for more than yourself. With multiple email mappings, you can forward emails for the entire family!
+ * *Unmapped Emails Bounced*: Emails sent to your domain that aren't mapped get bounced back to the sender!
+ * *Original Message Headers:* You need to know who sent the orginal email? You need to who the address the email was sent to? No need to worry, the orginal header info is added to the body of the email.
+ * *Supports Large Attachments:* Large or small, you'll get your attachments!
 
 # Infastructure
-The deployment process sets up your aws infastructre.
-
-### Cost
-For an individual or family, assuming you're already paying for a domain name, the operating costs to recive emails should be close to zero. The following table braks down the cost per month. The breakdown assumes 1000 emails / month with 1 GB of attachments. For private useage, this is more than average.
-
-| Service | Reasion                         | $     | $ Link                                         | $ Breakdown 
-|---------|---------------------------------|-------|------------------------------------------------|----------------
-| SES     | Recives emails                  | $0.12 | [link](https://aws.amazon.com/ses/pricing/)    | * 1000 Inbound Emails: $0.00<br /> * 1000 Outbound Emails: $0.00<br /> * 1 GB of Attachments: $0.12
-| S3      | Persists emails                 | $0.02 | [link](https://aws.amazon.com/s3/pricing/)     | * 1 GB of storage: $0.02 
-| SNS     | Notified when email's recived   | $0.00 | [link](https://aws.amazon.com/sns/pricing/)    | * SNS subscription: $0.00
-| SQS     | SNS Subscribed, triggers lambda | $0.00 | [link](https://aws.amazon.com/sqs/pricing/)    | * 1000 messages: $0.00<br /> * < 1000 dlq messages: $0.00
-| Lambda  | Forwards recived emails         | $0.00 | [link](https://aws.amazon.com/lambda/pricing/) | * 1000 invokations @ 512MB: $0.00
-
-*Aproximate Total:* $0.14 / month
-
-<sub>*Note that this cost estimation does not include the price of your domain name, which is by far the most expensive part of this.</sub>
-
-# Deploy
+-insert flow chart-
