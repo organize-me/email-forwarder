@@ -9,7 +9,7 @@ This project aims to forward emails sent to your domain to an address of your ch
  * *Supports Large Attachments:* Large or small, you'll get your attachments! (Up to 40MB, see Limitations)
 
 ### Limitations
-  * *No Spoofing*: Ideally, the emails you receive in your target inbox would have all of the original headers, like it was sent directly to that address, but this isn't possible in SES. AWS requires emails sent through SES a verified address or domain.
+  * *No Spoofing*: Ideally, the emails you receive in your target inbox would have all of the original headers, like it was sent directly to that address, but this isn't possible in SES. AWS requires emails sent through SES a verified address or domain. We do, however, set the "Reply-To" header so your email service or client should know who to send replys to.
   * *40 MB Limit*: SES supports emails only up to 40MB.
 
 # Infastructure
