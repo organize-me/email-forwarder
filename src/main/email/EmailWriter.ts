@@ -106,7 +106,7 @@ export class EmailWriter {
         out.write(NEWLINE)
         out.write(NEWLINE)
 
-        out.write(quotedPrintable.encode(utf8.encode(this.insertHeaders(html, OriginalHeaders.createHtml(this.origFrom, this.origTo, this.origCc)))))
+        out.write(quotedPrintable.encode(utf8.encode(this.insertHeaders(html, OriginalHeaders.createHtmlStyle(), OriginalHeaders.createHtml(this.origFrom, this.origTo, this.origCc)))))
         out.write(NEWLINE)
 
         console.log("writing html complete")
@@ -155,10 +155,14 @@ export class EmailWriter {
      * @returns 
      *      html with the headers inserted as the first element in the body
      */
-    private insertHeaders = (html: string, headersHtml: string): string => {
+    private insertHeaders = (html: string, headerStyleHtml: string, headersHtml: string): string => {
+        const styleNode = htmlParse(headerStyleHtml) as Node
         const headersNode = htmlParse(headersHtml) as Node
         const htmlNode = htmlParse(html)
         
+        const head = htmlNode.querySelector("head")
+        head.appendChild(styleNode)
+
         const body = htmlNode.querySelector("body")
         const childNodes = body.childNodes
 

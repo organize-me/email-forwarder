@@ -6,6 +6,7 @@ export namespace ForwardMapper {
         const values: {name: string, value: string}[] = []
         const to = findMappings(event.mail.destination)
         const from = createFrom(event)
+        const replyTo = event.mail.commonHeaders.from
         const headers = createHeaderMap(event)
         
     
@@ -19,6 +20,11 @@ export namespace ForwardMapper {
         values.push({
             name: "From",
             value: from
+        })
+
+        values.push({
+          name: "Reply-To",
+          value: replyTo.toString()
         })
     
         // To
@@ -76,7 +82,6 @@ export namespace ForwardMapper {
         const name = origFrom[0].name ?? origFrom[0].address
         return `${namePrefix} ${name} <${newFromAddress}>`
     }
-    
     
     function findMappings(destination: string[]): string {
         const forwards = config.get("forward")
