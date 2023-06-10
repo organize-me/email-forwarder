@@ -3,7 +3,7 @@ Do you have a domain you're managing through AWS? Would you like to use that dom
 
 ### Features
  * *Multiple Mappings:* Maybe you'd like to forward emails for more than yourself. With multiple email mappings, you can forward emails for the entire family!
- * *Reply To Sender:* Forwarded emails aren't sent to your target inbox by the sender, replys are sent to the orginal sender.
+ * *Reply To Sender:* Forwarded emails aren't sent to your target inbox by the sender, they are sent by the forwarding process. Replys to emails, though, are still sent to the orginal sender.
  * *Unmapped Emails Bounced*: Emails sent to an address that isn't mapped gets bounced back to the sender! This will let them know their email was not recived by anyone.
  * *Original Message Headers:* Knowing who sent the email, and who the email was intended for, is important. This forwarder adds the orginal header info to the body of the email, including the orginal `From`, `To`, and `Cc` headers.
  * *Supports Large Attachments:* Large or small, you'll get your attachments! (Up to 40MB, see Limitations)
