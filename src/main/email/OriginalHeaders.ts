@@ -1,3 +1,4 @@
+import { Address } from "./ForwardMapper"
 import { NEWLINE, Utils } from "./Utils"
 
 export namespace OriginalHeaders {
@@ -31,19 +32,19 @@ export namespace OriginalHeaders {
   export const createHtmlStyle = () => `
     <style>
       div.email-headers {
-        style="padding: 3px 3px 10px 3px"
+        style="padding: 3px 3px 10px 3px !important"
       }
       .email-headers table {
-        background-color: #FFFFFF;
-        box-shadow: 0 0 9px 0px #FFFFFF;
-        border-radius: 4px;
+        background-color: #FFFFFF !important;
+        box-shadow: 0 0 9px 0px #FFFFFF !important;
+        border-radius: 4px !important;
       }
       .email-headers span, .email-headers a {
-        color: #808080;
-        font-size: 12px;
+        color: #808080 !important;
+        font-size: 12px !important;
       }
       .email-headers span.header-name {
-        padding-right: 10px
+        padding-right: 10px !important;
       }
     </style>
   `
@@ -63,25 +64,40 @@ export namespace OriginalHeaders {
         ${ from ? `
         <tr>
             <td><em><span class="header-name">From: </span></em></td>
-            <td><em><span>${Utils.escapeHtml(from)}</span></em></td>
+            <td><em><span>${createLinks(from)}</span></em></td>
         </tr>
         `:''}
 
         ${ to ? `
         <tr>
             <td><em><span class="header-name">To: </span></em></td>
-            <td><em><span>${Utils.escapeHtml(to)}</span></em></td>
+            <td><em><span>${createLinks(to)}</span></em></td>
         </tr>
         `:''}
         
         ${ cc ? `
         <tr>
             <td><em><span class="header-name">Cc: </span></em></td>
-            <td><em><span>${Utils.escapeHtml(cc)}</span></em></td>
+            <td><em><span>${createLinks(cc)}</span></em></td>
         </tr>
         `:''}
       </tbody>
     </table>
   </div>
   `
+}
+
+const createLinks = (addresses: string): string => {
+  const addressList = Address.parseList(addresses)
+  const linkList = [] as string[]
+
+  for(const address of addressList) {
+    if(address.name) {
+      linkList.push(`<a href="mailto:${Utils.escapeHtml(address.address)}">${Utils.escapeHtml(address.name)}</a>`)
+    } else {
+      linkList.push(`<a href="mailto:${Utils.escapeHtml(address.address)}">${Utils.escapeHtml(address.address)}</a>`)
+    }
+  }
+
+  return linkList.toString()
 }
