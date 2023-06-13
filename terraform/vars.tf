@@ -1,11 +1,5 @@
 // --== Variables ==-- //
 
-// the email domain
-variable "domain" {
-  type = string
-  description = "domain name"
-}
-
 // the deployment envoirnment
 variable "env" {
   type = string
@@ -28,16 +22,25 @@ locals {
   config = jsondecode(file("${var.config_directory}${var.env}.json"))
 
   // The name of our function
-  function_name = "${replace(var.domain, ".", "-")}-email-forwarder-${var.env}"
+  function_name = "${replace(local.domain, ".", "-")}-email-forwarder-${var.env}"
   
   // Tags to attach to aws resources
   tags = {app = "email-forwarder", env = var.env}
+
+  // The domain name
+  domain = local.config.domain
+
+  // The subdomains
+  subdomains = toset(local.config.subdomains)
+
+  // The address that emails are sent from
+  from_email = local.config.from
 
   // Email address to send alerts to
   admin_email = local.config.admin-email
   
   // Set of mapped email addresses
-  emails = keys(local.config.forward)  
+  emails = keys(local.config.forward)
 }
 
 // The current aws region

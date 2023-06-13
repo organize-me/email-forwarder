@@ -72,7 +72,7 @@ export namespace ForwardMapper {
     function createFrom(event: EmailEvent): string {
         const namePrefix = config.has("name-prefix") ? config.get("name-prefix") : ""
         const newFromAddress = config.get("from")
-        const origFrom = event.mail.commonHeaders.from.map(Address.parse)
+        const origFrom = event.mail.commonHeaders.from.map(NameAddress.parse)
     
         if(origFrom.length<1) {
             throw new Error("from address not defined")
@@ -115,7 +115,7 @@ export namespace ForwardMapper {
     }
 }
 
-export class Address {
+export class NameAddress {
     public name?: string;
     public address: string
 
@@ -128,7 +128,7 @@ export class Address {
         return this.name ? `${this.name} <${this.address}>` : this.address
     }
 
-    static parse(address: string): Address {
+    static parse(address: string): NameAddress {
         address = address.trim()
         
         if(/^.*<.*>$/.test(address)) {
@@ -136,10 +136,10 @@ export class Address {
             
             let addressStartIndex = address.indexOf('<')
             let addressEndIndex = address.indexOf('>')
-            let name = address.substring(0,addressStartIndex).trim()
-            let adrs = address.substring(addressStartIndex+1, addressEndIndex).trim()
+            let name = address.substring(0,addressStartIndex).replaceAll('"', '').trim()
+            let adrs = address.substring(addressStartIndex+1, addressEndIndex).replaceAll('"', '').trim()
 
-            return new Address({
+            return new NameAddress({
                 name: name,
                 address: adrs
             })
@@ -147,20 +147,21 @@ export class Address {
         } else {
             // addr-spec format
             
-            return new Address({
+            return new NameAddress({
                 address: address
             })
         }
     }
 
-    static parseList(addressList: string): Address[] {
+    static parseList(addressList: string): NameAddress[] {
         let addresses = addressList.replace(";", ",").split(",")
 
         let addressArray = []
         for(const address of addresses) {
-            addressArray.push(Address.parse(address))
+            addressArray.push(NameAddress.parse(address))
         }
 
         return addressArray
     }
 }
+

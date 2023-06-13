@@ -38,7 +38,7 @@ resource "aws_ses_receipt_rule" "bounce-rule" {
 
   bounce_action {
     message         = "Mailbox does not exist"
-    sender          = "noreply@${var.domain}"
+    sender          = local.from_email
     smtp_reply_code = "550"
     status_code     = "5.1.1"
     position        = 1

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
 import 'mocha';
-import { Address } from '../../main/email/ForwardMapper';
+import { NameAddress } from '../../main/email/ForwardMapper';
 
 
 describe('email util tests', () => {
@@ -23,28 +23,28 @@ describe('email util tests', () => {
         },
     ].forEach((t) => {
         it(`test parse address: ${t.address}`, () => {
-            let addr = Address.parse(t.address)
+            let addr = NameAddress.parse(t.address)
             
             expect(addr.name).eq(t.expectName)
-            expect(addr.address).eq(t.expectAddress)
+            expect(addr.address.toString()).eq(t.expectAddress)
         })
     });
 
     [
         {
-            addressList: "test@test.com, My Name <myname@test.com>",
-            expectedNames: [undefined, "My Name"],
-            expectAddresses: ["test@test.com", "myname@test.com"]
+          addressList: "test@test.com, My Name <myname@test.com>",
+          expectedNames: [undefined, "My Name"],
+          expectAddresses: ["test@test.com", "myname@test.com"]
         }
     ].forEach((t) => {
         it(`test parse address list: ${t.addressList}`, () => {
             
-            let addrList = Address.parseList(t.addressList)
+            let addrList = NameAddress.parseList(t.addressList)
 
             for(const index in addrList) {
                 expect(addrList[index].name).eq(t.expectedNames[index])
-                expect(addrList[index].address).eq(t.expectAddresses[index])
+                expect(addrList[index].address.toString()).eq(t.expectAddresses[index])
             }
         }
-    )})
+    )});
 });

@@ -4,6 +4,7 @@
   "description": "forwards emails sent to your aws managed another address",
   "main": "index.js",
   "scripts": {
+    "update": "npm run build && npm run deploy",
     "deploy": "./scripts/deploy.sh",
     "build": "./scripts/build.sh",
     "clean": "rm -rf ./build",

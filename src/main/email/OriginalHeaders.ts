@@ -1,4 +1,4 @@
-import { Address } from "./ForwardMapper"
+import { NameAddress } from "./ForwardMapper"
 import { NEWLINE, Utils } from "./Utils"
 
 export namespace OriginalHeaders {
@@ -88,7 +88,7 @@ export namespace OriginalHeaders {
 }
 
 const createLinks = (addresses: string): string => {
-  const addressList = Address.parseList(addresses)
+  const addressList = NameAddress.parseList(addresses)
   const linkList = [] as string[]
 
   for(const address of addressList) {
