@@ -9,7 +9,7 @@ resource "aws_sns_topic" "email_forwarder" {
 // This queue is subscribed to the topic. Our lambda function is triggered by this queue
 resource "aws_sqs_queue" "email_forwarder_queue" {
   name                        = local.function_name
-  delay_seconds               = 90
+  delay_seconds               = 0
   max_message_size            = 262144
   message_retention_seconds   = 86400
   receive_wait_time_seconds   = 10
