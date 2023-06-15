@@ -1,6 +1,6 @@
 import { AttachmentStream, MailParser, MessageText } from "mailparser";
 import { PassThrough, Readable, Writable } from "stream";
-import { NodemailerEmailSender as EmailSender } from "./EmailSender";
+import { SESEmailSender as EmailSender } from "./EmailSender";
 import { Utils } from "./Utils";
 import { EmailWriter } from "./EmailWriter";
 

@@ -1,16 +1,17 @@
 import nodemailer = require("nodemailer");
 import config = require('config');
 import { Readable, once } from "stream";
+import { SESClient, CloneReceiptRuleSetCommand, SendRawEmailCommand } from "@aws-sdk/client-ses";
 
 export interface EmailSender {
   sendEmail: (from: string, to: string, stream: Readable) => Promise<MessageInfo>
 }
 
 export interface MessageInfo {
-  accepted: string[]
-  rejected: string[]
-  pending: string[]
-  response: string
+  accepted?: string[]
+  rejected?: string[]
+  pending?: string[]
+  response?: string
 }
 
 
@@ -38,6 +39,35 @@ export class NodemailerEmailSender implements EmailSender {
     }
   }
   
+}
+
+
+export class SESEmailSender implements EmailSender {
+
+  private static sesClient = new SESClient({})
+
+  sendEmail = async (from: string, to: string, stream: Readable): Promise<MessageInfo> => {
+    const data = await this.toArray(stream)
+    
+    const command = new SendRawEmailCommand({
+      RawMessage: {
+        Data: data
+      }
+    })
+
+    const response = await SESEmailSender.sesClient.send(command)
+    return {
+      response: response.$metadata.httpStatusCode.toString()
+    }
+  }
+
+  private toArray = (stream: Readable) => new Promise<Uint8Array>((resolve, reject) => {
+    const array = new Array<any>()
+
+    stream.on("data", (chunk) => {array.push(chunk)})
+    stream.on("end", () => resolve(new Uint8Array(Buffer.concat(array))))
+    stream.on("error", (err: Error) => reject(err))
+  })
 }
 
 export class StdoutEmailSender implements EmailSender {

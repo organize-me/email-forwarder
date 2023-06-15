@@ -14,10 +14,10 @@ resource "aws_cloudwatch_metric_alarm" "dlq-alarm" {
   actions_enabled     = true
   alarm_actions       = [aws_sns_topic.email_forwarder_alarm.arn]
   comparison_operator = "GreaterThanOrEqualToThreshold"
-  metric_name         = "NumberOfMessagesSent"
+  metric_name         = "ApproximateNumberOfMessagesVisible"
   namespace           = "AWS/SQS"
   statistic           = "Maximum"
-  period              = 3600 // 1 hour
+  period              = 900 // 15 minuteshour
   threshold           = 1
   evaluation_periods  = 1
   treat_missing_data  = "missing"

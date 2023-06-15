@@ -45,6 +45,21 @@ data "aws_iam_policy_document" "email_forwarder_execution_policy_doc" {
       "${aws_s3_bucket.email_forwarder_s3.arn}/*"
     ]
   }
+
+  statement {
+    sid = "SES"
+    effect = "Allow"
+    actions = [
+      "ses:SendEmail",
+      "ses:SendRawEmail"
+    ]
+    resources = ["arn:aws:ses:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:identity/${local.domain}"]
+    condition {
+      test = "StringLike"
+      variable = "ses:FromAddress"
+      values = ["${local.from_email}"]
+    }
+  }
 }
 
 resource "aws_iam_policy" "email_forwarder_execution_policy" {

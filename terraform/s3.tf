@@ -7,6 +7,18 @@ resource "aws_s3_bucket" "email_forwarder_s3" {
   tags = local.tags
 }
 
+resource "aws_s3_bucket_lifecycle_configuration" "email_forwarder_s3_expire" {
+  bucket = aws_s3_bucket.email_forwarder_s3.id
+
+  rule {
+    id = "delete"
+    status = "Enabled"
+    expiration {
+      days = 7
+    }
+  }
+}
+
 // The policy document needed to let SES save emails in the bucket
 data "aws_iam_policy_document" "email_forwarder_s3_policy_doc" {
   statement {

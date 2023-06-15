@@ -9,13 +9,13 @@ resource "aws_sns_topic" "email_forwarder" {
 // This queue is subscribed to the topic. Our lambda function is triggered by this queue
 resource "aws_sqs_queue" "email_forwarder_queue" {
   name                        = local.function_name
-  delay_seconds               = 10
+  delay_seconds               = 90
   max_message_size            = 262144
   message_retention_seconds   = 86400
   receive_wait_time_seconds   = 10
   redrive_policy = jsonencode({
     deadLetterTargetArn = aws_sqs_queue.email_forwarder_dlq.arn
-    maxReceiveCount     = 4
+    maxReceiveCount     = 3
   })
 
   tags = local.tags

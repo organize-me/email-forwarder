@@ -1,19 +1,12 @@
 {
-    "smtp": {
-        "host": "localhost",
-        "port": 1025,
-        "secure": false,
-        "auth": {
-            "user": "test",
-            "pass": "test"
-        },
-        "tls": {
-            "rejectUnauthorized": false
-        }
-    },
-    "name-prefix": "\uD83D\uDCE8",
-    "from": "noreply@to-domain.com",
+    "domain": "your-domain.com",
+    "subdomains": ["spam", "accounts"],
+    "admin-email": "admin@gmail.com",
+    "name-prefix": "📨",
+    "from": "noreply@your-domain.com",
     "forward": {
-        "isaiah.v@to-domain.com": "Isaiah <isaiah.v@mapped-domain.com>"
+        "you@your-domain.com": "Your Name <you@gmail.com>",
+        "you@spam.your-domain.com": "Your Name <you@gmail.com>",
+        "you@accounts.your-domain.com": "Your Name <you@gmail.com>"
     }
 }

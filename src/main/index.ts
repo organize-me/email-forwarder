@@ -9,22 +9,22 @@ export const handler: SQSHandler = async (event: SQSEvent): Promise<SQSBatchResp
 
     const batchItemFailures: SQSBatchItemFailure[] = []
     
-    await Promise.all(event.Records.map(async r => {
-        try {
-            console.info(`${r.messageId}: processing start`)
-            await processRecord(r)
-            console.info(`${r.messageId}: processing successful`)
-        } catch(e) {
-            console.error(`${r.messageId}: processing error`)
-            console.error(e)
+    for(const r of event.Records) {
+      try {
+        console.info(`${r.messageId}: processing start`)
+        await processRecord(r)
+        console.info(`${r.messageId}: processing successful`)
+      } catch(e) {
+        console.error(`${r.messageId}: processing error`)
+        console.error(e)
 
-            batchItemFailures.push({
-                itemIdentifier: r.messageId
-            })
-        }
-
-        console.info(`${r.messageId}: message complete`)
-    }))
+        batchItemFailures.push({
+            itemIdentifier: r.messageId
+        })
+      }
+      console.info(`${r.messageId}: message complete`)
+    }
+    
     console.info("batch processing done")
 
     return {
