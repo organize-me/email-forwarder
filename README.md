@@ -10,7 +10,7 @@ Do you have a domain you're managing through AWS? Would you like to use that dom
 
 ### Limitations
   * *No Spoofing*: Ideally, the emails you receive in your target inbox would have all of the original headers, like it was sent directly to that address, but this isn't possible in SES. AWS requires emails sent through SES be a verified address or domain.
-  * *40 MB Limit*: SES supports emails only up to 40MB.
+  * *10 MB Limit*: SES client supports emails only up to 10MB.
 
 # Infrastructure
 ![Infrastructure Diagram](documents/infrastructure.jpeg)
