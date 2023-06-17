@@ -5,7 +5,7 @@ import { Base64Encode } from "base64-stream"
 import quotedPrintable = require("quoted-printable")
 import { OriginalHeaders } from "./OriginalHeaders"
 import utf8 = require("utf8")
-import { parse as htmlParse , Node} from 'node-html-parser';
+import { parse as htmlParse , valid as htmlValid, HTMLElement, Node} from 'node-html-parser';
 import crypto = require('crypto');
 
 export class EmailWriter {
@@ -148,7 +148,8 @@ export class EmailWriter {
     }
 
     /**
-     * Adds the headers-html as the first child in the html body element.
+     * Attempts to add the headers-html as the first child in the html body element.
+     * If inseting fails, the orginal html is returned
      * 
      * @param html the html
      * @param headersHtml headers (in html) to add insert into the body
@@ -158,16 +159,42 @@ export class EmailWriter {
     private insertHeaders = (html: string, headerStyleHtml: string, headersHtml: string): string => {
         const styleNode = htmlParse(headerStyleHtml) as Node
         const headersNode = htmlParse(headersHtml) as Node
-        const htmlNode = htmlParse(html)
         
-        const head = htmlNode.querySelector("head")
+        if(!htmlValid(html)) {
+          // Cannot correctly parse bad html.
+          // Skip adding headers, return orginal html
+          return html
+        }
+        const root = htmlParse(html)
+        
+        let htmlNode = root.querySelector("html")
+        if(!html) {
+          // Something's wrong
+          // Skip adding headers, return orginal html
+          return html
+        }
+        
+        let head = htmlNode.querySelector("head")
+        if(!head) {
+          // The html node may not have a head node. Add it in
+          head = htmlParse("<head></head>")
+          this.insertAsFirstChild(htmlNode, head)
+        }
         head.appendChild(styleNode)
 
         const body = htmlNode.querySelector("body")
-        const childNodes = body.childNodes
-
-        body.set_content([headersNode].concat(childNodes))
+        if(!body) {
+          // Something's wrong
+          // Skip adding headers, return orginal html
+          return html
+        }
+        this.insertAsFirstChild(body, headersNode)
 
         return htmlNode.removeWhitespace().toString()
+    }
+
+    private insertAsFirstChild(parent: HTMLElement, insertNode: Node) {
+      const childNodes = parent.childNodes
+      parent.set_content([insertNode].concat(childNodes))
     }
 }

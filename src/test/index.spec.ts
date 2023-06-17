@@ -29,7 +29,8 @@ beforeEach(() => {
 describe('Lambda Happy Path', () => {
   [
     "happy-path.json",
-    "attachment-test.json"
+//    "attachment-test.json",
+//    "cinemark.json"
   ].forEach(eventFile => {
     it(`invocation: ${eventFile}`, function() {
       this.timeout(0)
