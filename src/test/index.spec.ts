@@ -8,9 +8,12 @@ import { mockClient } from "aws-sdk-client-mock";
 
 import 'mocha';
 import { DeleteObjectCommand, GetObjectCommand, GetObjectCommandInput, S3Client } from '@aws-sdk/client-s3';
+import { SESClient, SendRawEmailCommand } from '@aws-sdk/client-ses';
 
 const s3Mock = mockClient(S3Client)
 const s3MockRoot = "./src/test/data/mockS3/"
+
+const sesMock = mockClient(SESClient)
 
 
 beforeEach(() => {
@@ -23,14 +26,24 @@ beforeEach(() => {
     }
   })
   s3Mock.on(DeleteObjectCommand).resolves({})
+
+  sesMock.reset()
+  sesMock.on(SendRawEmailCommand).callsFake((input: SendRawEmailCommand) => {
+    return {
+      "$metadata": {
+        httpStatusCode: 200
+      }
+    }
+  })
 })
 
 
 describe('Lambda Happy Path', () => {
   [
-    "happy-path.json",
-//    "attachment-test.json",
-//    "cinemark.json"
+//      "happy-path.json",
+//      "attachment-test.json",
+      "cinemark.json",
+//      "justhtml.json"
   ].forEach(eventFile => {
     it(`invocation: ${eventFile}`, function() {
       this.timeout(0)

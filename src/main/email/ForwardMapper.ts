@@ -1,5 +1,6 @@
 import config = require('config');
 import { EmailEvent } from '..';
+import { Utils } from './Utils';
 
 export namespace ForwardMapper {
     export const toForwardHeaders = (event: EmailEvent): {name: string, value: string}[] => {
@@ -49,7 +50,7 @@ export namespace ForwardMapper {
         }
     
         // Content-Type
-        const contentType = headers.get("content-type")
+        const contentType = getContentType(headers)
         if(contentType) {
             values.push({
                 name: contentType.name,
@@ -113,7 +114,26 @@ export namespace ForwardMapper {
     
         return map
     }
+
+    function getContentType(headers: Map<string, {name: string, value: string}>): {name: string, value: string} {
+      const contentTypeHeader = headers.get("content-type")
+      const contentType = Utils.parseContentType(contentTypeHeader.value)
+
+      if(contentType.type.toLowerCase() === "multipart") {
+        // if the content type is "multipart, use that header"
+        return contentTypeHeader
+      } else {
+        // if the content type is not "multipart", it's a single entry email. This forwaders, however, only
+        // processes multipart emails. Convert to a multipart. A multipart can support a single entry.
+        return {
+          name: "Content-Type",
+          value: `multipart/alternative; boundary="${Utils.createRandomBoundry()}"`
+        }
+      }
+    }
 }
+
+
 
 export class NameAddress {
     public name?: string;

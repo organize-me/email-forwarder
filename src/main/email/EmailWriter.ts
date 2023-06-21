@@ -6,7 +6,6 @@ import quotedPrintable = require("quoted-printable")
 import { OriginalHeaders } from "./OriginalHeaders"
 import utf8 = require("utf8")
 import { parse as htmlParse , valid as htmlValid, HTMLElement, Node} from 'node-html-parser';
-import crypto = require('crypto');
 
 export class EmailWriter {
 
@@ -46,7 +45,7 @@ export class EmailWriter {
             out.write(this.boundry)
             out.write(NEWLINE)
 
-            boundary = "--=_FWD-" + crypto.randomUUID()
+            boundary = Utils.createRandomBoundry()
             out.write(Utils.fold(`Content-Type: multipart/alternative; boundary="${boundary}"`))
             out.write(NEWLINE)
             out.write(NEWLINE)

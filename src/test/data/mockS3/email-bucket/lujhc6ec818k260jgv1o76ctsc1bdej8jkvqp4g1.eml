@@ -1,7 +1,7 @@
 Return-Path: <isaiah.v@from-domain.com>
 Received: from resqmta-a1p-077435.sys.comcast.net (resqmta-a1p-077435.sys.comcast.net [96.103.146.51])
  by inbound-smtp.us-west-2.amazonaws.com with SMTP id lujhc6ec818k260jgv1o76ctsc1bdej8jkvqp4g1
- for isaiah.v@to-domain.com;
+ for you@your-domain.com;
  Sat, 03 Jun 2023 21:11:32 +0000 (UTC)
 X-SES-Spam-Verdict: PASS
 X-SES-Virus-Verdict: PASS
@@ -37,7 +37,7 @@ X-Xfinity-VAAS: gggruggvucftvghtrhhoucdtuddrgedvhedrfeelhedgudehkecutefuodetggdo
 X-Xfinity-VMeta: sc=0.00;st=legit
 Date: Sat, 3 Jun 2023 14:11:28 -0700 (PDT)
 From: Isaiah van der elst <isaiah.v@from-domain.com>
-To: "isaiah.v@to-domain.com" <isaiah.v@to-domain.com>
+To: "you@your-domain.com" <you@your-domain.com>
 Message-ID: <269738469.900875.1685826688888@connect.xfinity.com>
 Subject: attachment test
 MIME-Version: 1.0

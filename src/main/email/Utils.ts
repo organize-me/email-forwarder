@@ -1,3 +1,4 @@
+import crypto = require('crypto');
 
 /** CRCF seems to be the standard */
 export const NEWLINE = "\r\n"
@@ -89,5 +90,7 @@ export namespace Utils {
     export const escapeHtml = (unsafe: string) => {
         return unsafe.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
     }
+
+    export const createRandomBoundry = () => "--=_FWD-" + crypto.randomUUID()
 }
 

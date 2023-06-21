@@ -1,0 +1,46 @@
+Received: from omp.e.linkedin.com (omp.e.linkedin.com [199.7.207.192])
+ by inbound-smtp.us-west-2.amazonaws.com with SMTP id ll3rvn2fbnapvtp9chshr6e0t85rvri4otkfnh81
+ for you@your-domain.com;
+ Wed, 21 Jun 2023 14:35:16 +0000 (UTC)
+X-SES-Spam-Verdict: PASS
+X-SES-Virus-Verdict: PASS
+Received-SPF: pass (spfCheck: domain of e.linkedin.com designates 199.7.207.192 as permitted sender) client-ip=199.7.207.192; envelope-from=linkedin@e.linkedin.com; helo=omp.e.linkedin.com;
+Authentication-Results: amazonses.com;
+ spf=pass (spfCheck: domain of e.linkedin.com designates 199.7.207.192 as permitted sender) client-ip=199.7.207.192; envelope-from=linkedin@e.linkedin.com; helo=omp.e.linkedin.com;
+ dkim=pass header.i=@e.linkedin.com;
+ dmarc=pass header.from=e.linkedin.com;
+X-SES-RECEIPT: AEFBQUFBQUFBQUFGeXAvNUZKNTlGUWd2eWFuTzFjNllFakhoSkQzZjEzVGYzRkRMeGpNbDU2M3J3VXlIejhaT0tmOXZ2Y3pPWkROMVZsMXduaUNLM3VnYjZYRnNtS1hWL3VxR3p6U3JVTVBwVXFFZnVRVm9jMlNYc2JJNityWHlnMklnbnkrSkJVakR4Sk5QaDZmUzZZN2VyOTJGV0pTRlRxVTlDQXVNZHdFb2pYWTVlRC9ERXVUTlh2Z2tsME01cXRDclhaaWhKRE1hQ21BNnc3enJkL1dNWFluTndnT1J2cHBieklVejMrTHdPUnlxNTMrR0lCOGw4cjM5Y2g2dE1BcGtEU2hEcFUvNXYwczJSM00va1NpZ1FnN2d0Q29uTWswVWt1aThZbjN6NXNLVTRTRERQVHc9PQ==
+X-SES-DKIM-SIGNATURE: a=rsa-sha256; q=dns/txt; b=Y84xBA3Qj5L1rjMTW4+pfUYpTA8BgBQMqrS40NY2ayYdxAhQ3Itq5sy9rYnOCV4c6AJkLzGE/bQJKapJyW0KCehJad9NybJaOlSLov8wa0LaWZa2HZtbWCy4SiKBRH502DMatQ0QLrq3RNwIMw6TcaO1KJgrgJkyN1FRoRUHc5g=; c=relaxed/simple; s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1687358117; v=1; bh=iunLm6ZLTufOXdTfyZkqjLR7rJ+KAwGWx2IckVx9458=; h=From:To:Cc:Bcc:Subject:Date:Message-ID:MIME-Version:Content-Type:X-SES-RECEIPT;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=linkedin; d=e.linkedin.com;
+ h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:To:From:Reply-To:
+ Subject:List-Unsubscribe:List-Unsubscribe-Post:Message-ID;
+ i=linkedin@e.linkedin.com;
+ bh=IoLtVz3fxZtZVdyna8dhczb38rTqkGgbSIUjZOsun0w=;
+ b=s2VNMhDhaaM7IIz3A3bjiP4viRJX/av9gkaQmv+0WvKK0/b5fq1/snb9nW5LuSmu7S+v0hbVZqnL
+   Rpxjomb4CuHch7ss0T2b2p+5gk3tjWDnNLg8mZnGI2tX/O0u0gakrv+Y1glBrQwywcNNplEj3aKP
+   qL9btwDfiJP1LifCllg=
+Received: by omp.e.linkedin.com id hic5a832bv0t for <you@your-domain.com>; Wed, 21 Jun 2023 07:35:16 -0700 (envelope-from <linkedin@e.linkedin.com>)
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 21 Jun 2023 07:35:16 -0700
+To: you@your-domain.com
+From: =?UTF-8?B?TGlua2VkSW4=?= <linkedin@e.linkedin.com>
+Reply-To: =?UTF-8?B?TGlua2VkSW4=?= <donotreply@e.linkedin.com>
+Subject: Stand out by adding these skills to your profile
+Feedback-ID: 50563:26062915:oraclersys
+X-sgxh1: pkHpHoxNHgKLjLtklQohmkL
+X-rext: 6.interact5.E-0zEz1kGvNYh4Oa8XAOmREKVNcNcIHxdIIkQrnIhXxhYRNoUxT0alBxmW8RTdfwuKc
+X-cid: linkedin.18426535
+X-ei: EVXHWgfWSnFjXC5tEHTFfax2u_40zpo
+X-CSA-Complaints: whitelist-complaints@eco.de
+Message-ID: <0.1.13F.20F.1D9A44D9887A87E.0@omp.e.linkedin.com>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <body>
+        <span>Just HTML</span>
+    </body>
+</html>
