@@ -32,12 +32,8 @@ export namespace OriginalHeaders {
   export const createHtmlStyle = () => `
     <style>
       div.email-headers {
-        style="padding: 3px 3px 10px 3px !important"
-      }
-      .email-headers table {
-        background-color: #FFFFFF !important;
-        box-shadow: 0 0 9px 0px #FFFFFF !important;
-        border-radius: 4px !important;
+        style="padding: 3px 3px 10px 3px !important";
+        background: #FFFFFF;
       }
       .email-headers span, .email-headers a {
         color: #808080 !important;
